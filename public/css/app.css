@@ -1,0 +1,39 @@
+html, body {
+  height: 100%;
+}
+
+#main {
+  bottom: 0;
+  top: 60px;
+  right: 0;
+  position: absolute;
+  left: 0;
+}
+
+div[data-role=page] {
+  height: 100%;
+}
+
+.login-form {
+	padding: 0 15%;
+}
+
+.chat-view {
+  height: 100%;
+  padding: 20px;
+}
+
+.chat-view__messages {
+  position: relative;
+  overflow: auto;
+  height: calc(100% - 150px);
+}
+
+.chat-view__new-message {
+  position: relative;
+  overflow: auto;
+  padding-bottom: 5px !important;
+  height: 120px;
+}
+
+.chat-view__new-message input {}

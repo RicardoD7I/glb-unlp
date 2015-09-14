@@ -1,0 +1,42 @@
+{
+  "name": "globant-chat",
+  "description": "A demo application using Backbone, Marionette, Socket.io, Express and MongoDB",
+  "version": "1.0.0",
+  "author": {
+    "name": "Ricardo Vella",
+    "email": "ricardod7i@hotmail.com"
+  },
+  "engines": {
+    "node": "0.12.x"
+  },
+  "scripts": {
+    "start": "set NODE_PATH=./config:./app/controllers NODE_ENV=development ./node_modules/.bin/nodemon server.js",
+    "test": "make test"
+  },
+  "dependencies": {
+    "async": "1.3.0",
+    "body-parser": "1.13.2",
+    "compression": "1.5.1",
+    "connect-flash": "0.1.1",
+    "connect-mongo": "0.8.1",
+    "cookie-parser": "1.3.5",
+    "cookie-session": "1.2.0",
+    "csurf": "1.8.3",
+    "express": "4.13.1",
+    "express-session": "1.11.3",
+    "forever": "0.14.2",
+    "method-override": "2.3.3",
+    "mongoose": "4.0.6",
+    "morgan": "1.6.1",
+    "socket.io": "^1.3.6",
+    "swig": "1.4.2",
+    "view-helpers": "0.1.5",
+    "winston": "1.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "latest",
+    "mocha": "latest",
+    "should": "latest",
+    "supertest": "latest"
+  }
+}
