@@ -14,6 +14,11 @@ div[data-role=page] {
   height: 100%;
 }
 
+img {
+  height: 50px;
+  padding-left: 20px;
+}
+
 .login-form {
 	padding: 0 15%;
 }
@@ -44,4 +49,48 @@ div[data-role=page] {
  .message-item {
   width: 100% !important;
   min-height: 25px !important;
+}
+
+@media (max-width: 600px) {
+  .navbar-nav {
+    margin: 7.5px 0 !important;
+  }
+
+  .chat-view__messages {
+    padding: 5px !important;
+    margin: 0 !important;
+    height: calc(100% - 110px);
+    font-size: 12px;
+  }
+
+  .row-action-primary {
+    display: none !important;
+  }
+
+  .list-group-item-heading {
+    font-size: 15px !important;
+    height: 20px !important;
+  }
+
+  .list-group-separator:before {
+    width: 100% !important;
+  }
+
+  .message-item {
+    display: block;
+    width: 100% !important;
+    height: 40px !important;
+  }
+
+  .chat-view {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .chat-view__new-message {
+    padding: 5px !important;
+    margin-bottom: 0 !important;
+    margin-top: 10px;
+    height: 100px;
+  }
 }
