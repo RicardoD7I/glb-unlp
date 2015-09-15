@@ -1,12 +1,18 @@
 <div class="list-group-item">
-    <% if (isLogin) { %>
+    <% if (!isLogin) { %>
     <div class="row-action-primary">
         <i class="mdi-social-person"></i>
     </div>
     <% } %>
-    <div class="row-content">
-        <h4 class="list-group-item-heading"><%= username %></h4>
-        <p class="list-group-item-text"><%= message %></p>
+    <div class="row-content message-item">
+        <h4 class="list-group-item-heading"><%= username %>
+          <% if (isLogin) { %>
+            <small>is now logged in and willing to chat</small>
+          <% } %>
+        </h4>
+        <% if (!isLogin) { %>
+          <p class="list-group-item-text"><%= message %></p>
+        <% } %>
     </div>
 </div>
 <div class="list-group-separator"></div>

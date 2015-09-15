@@ -36,4 +36,12 @@ div[data-role=page] {
   height: 120px;
 }
 
-.chat-view__new-message input {}
+.row-action-primary + .message-item {
+  width: calc(100% - 92px) !important;
+  height: 60px;
+}
+
+ .message-item {
+  width: 100% !important;
+  min-height: 25px !important;
+}

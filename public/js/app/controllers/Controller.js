@@ -2,13 +2,29 @@ define(['App', 'backbone', 'marionette', 'views/WelcomeView', 'views/ChatView', 
   function(App, Backbone, Marionette, WelcomeView, ChatView, HeaderView, MessageCollection, cookiesUtils, io) {
     return Backbone.Marionette.Controller.extend({
       initialize: function(options) {
-        var that = this;
-
         // Show the navBarView
         App.rootLayout.headerRegion.show(new HeaderView());
 
         // Initialize messages collection
         this.messageCollection = new MessageCollection();
+      },
+
+      setupSocket: function() {
+        var that = this;
+
+        //Set new socket.io connection
+        App.socket = io();
+
+        // Send login message
+        App.socket.emit('message', {
+          username: cookiesUtils.getCookie('logged'),
+          isLogin: true
+        });
+
+        // Listen to broadcast channel
+        App.socket.on('broadcast', function(msg) {
+          that.messageCollection.add(msg);
+        });
       },
 
       index: function() {
@@ -23,19 +39,7 @@ define(['App', 'backbone', 'marionette', 'views/WelcomeView', 'views/ChatView', 
           cookiesUtils.setCookie('logged', params.get('username'));
           App.appRouter.navigate('/chat', true);
 
-          //Set new socket.io connection
-          App.socket = io();
-
-          // Send login message
-          App.socket.emit('message', {
-            username: cookiesUtils.getCookie('logged'),
-            isLogin: true
-          });
-
-          // Listen to broadcast channel
-          App.socket.on('broadcast', function(msg) {
-            that.messageCollection.add(msg);
-          });
+          this.setupSocket();
 
         }, this));
       },
@@ -45,6 +49,8 @@ define(['App', 'backbone', 'marionette', 'views/WelcomeView', 'views/ChatView', 
         if (!cookiesUtils.getCookie('logged')) {
           return App.appRouter.navigate('/', true)
         }
+
+        if (!App.socket) this.setupSocket();
 
         // Show the chat view
         App.rootLayout.mainRegion.show(new ChatView({
