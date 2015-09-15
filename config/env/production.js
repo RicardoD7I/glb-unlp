@@ -4,7 +4,7 @@
  */
 
 module.exports = {
-  db: 'mongodb://localhost/your_project_production',
+  db: 'mongodb://globant:globant123@ds051868.mongolab.com:51868/glbunlp',
   facebook: {
     clientID: 'APP_ID',
     clientSecret: 'SECRET',

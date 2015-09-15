@@ -39,7 +39,7 @@ define(['App', 'backbone', 'marionette', 'views/WelcomeView', 'views/ChatView', 
           cookiesUtils.setCookie('logged', params.get('username'));
           App.appRouter.navigate('/chat', true);
 
-          this.setupSocket();
+          //this.setupSocket();
 
         }, this));
       },
