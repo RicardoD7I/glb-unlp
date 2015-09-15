@@ -14,7 +14,8 @@ require.config({
         "text":"../libs/text/text",
         "backbone.wreqr" : "../libs/backbone.wreqr/lib/backbone.wreqr",
         "backbone.eventbinder" : "../libs/backbone.eventbinder/lib/amd/backbone.eventbinder",
-        "backbone.babysitter" : "../libs/backbone.babysitter/lib/backbone.babysitter"
+        "backbone.babysitter" : "../libs/backbone.babysitter/lib/backbone.babysitter",
+        "socket.io": "../libs/socket.io-client/socket.io"
     },
     // Sets the configuration for your third party scripts that are not AMD compatible
     shim:{

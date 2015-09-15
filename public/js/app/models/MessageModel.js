@@ -6,7 +6,8 @@ define(["jquery", "backbone"],
       // Default values for all of the Model attributes
       defaults: {
         username: '',
-        message: ''
+        message: '',
+        isLogin: false
       },
 
       // Get's called automatically by Backbone when the set and/or save methods are called (Add your own logic)

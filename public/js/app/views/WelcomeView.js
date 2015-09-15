@@ -1,43 +1,46 @@
 define(['App', 'marionette', 'models/userModel', 'text!templates/welcome.html'],
-    function(App, Marionette, User, template) {
-        //ItemView provides some default rendering logic
-        return Marionette.ItemView.extend({
-            //Template HTML string
-            template: _.template(template),
-            model: new User(),
+  function(App, Marionette, User, template) {
+    //ItemView provides some default rendering logic
+    return Marionette.ItemView.extend({
+      //Template HTML string
+      template: _.template(template),
+      model: new User(),
 
-            ui: {
-                'submitButton': '.submitButton',
-                'username': '.username',
-                'email': '.email',
-                'errorMessage': '.errorMessage'
-            },
+      ui: {
+        'submitButton': '.submitButton',
+        'username': '.username',
+        'email': '.email',
+        'errorMessage': '.errorMessage'
+      },
 
-            events: {
-                'click @ui.submitButton': 'clickedButton'
-            },
+      events: {
+        'click @ui.submitButton': 'clickedButton'
+      },
 
-            clickedButton: function(ev) {
-                var self = this;
+      clickedButton: function(ev) {
+        var self = this;
 
-                this.model.set({
-                    username: this.ui.username.val(),
-                    email: this.ui.email.val()
-                });
-
-                if (!this.model.isValid()) {
-                    this.ui.errorMessage[0].querySelector('span').innerHTML = this.model.validationError;
-                    this.ui.errorMessage.removeClass('hidden');
-                } else {
-                    this.model.save(this.model.attributes, {
-                        error: function(error) {
-                            console.log(error);
-                        },
-                        success: function() {
-                            self.trigger('login:success', self.model);
-                        }
-                    });
-                }
-            }
+        // Set model attributes
+        this.model.set({
+          username: $.trim(this.ui.username.val()),
+          email: $.trim(this.ui.email.val())
         });
+
+        // Validate model
+        if (!this.model.isValid()) {
+          this.ui.errorMessage[0].querySelector('span').innerHTML = this.model.validationError;
+          this.ui.errorMessage.removeClass('hidden');
+        } else {
+          this.model.save(this.model.attributes, {
+            error: function(error) {
+              this.ui.errorMessage[0].querySelector('span').innerHTML = 'Ups! There was an error trying to login. Please try again';
+              this.ui.errorMessage.removeClass('hidden');
+            },
+            success: function() {
+              self.trigger('login:success', self.model);
+            }
+          });
+        }
+      }
     });
+  });

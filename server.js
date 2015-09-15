@@ -11,19 +11,21 @@ var port = process.env.PORT || 3000;
 
 // Connect to mongodb
 var connect = function() {
-	var options = {
-		server: {
-			socketOptions: {
-				keepAlive: 1
-			}
-		}
-	};
-	mongoose.connect(config.db, options);
+  var options = {
+    server: {
+      socketOptions: {
+        keepAlive: 1
+      }
+    }
+  };
+  mongoose.connect(config.db, options);
 };
 connect();
 
-io.on('connection', function(socket){
-  console.log('a user connected');
+io.on('connection', function(socket) {
+  socket.on('message', function(msg) {
+    io.emit('broadcast', msg);
+  });
 });
 
 mongoose.connection.on('error', console.log);
@@ -31,7 +33,7 @@ mongoose.connection.on('disconnected', connect);
 
 // Bootstrap models
 fs.readdirSync(__dirname + '/app/models').forEach(function(file) {
-	if (~file.indexOf('.js')) require(__dirname + '/app/models/' + file);
+  if (~file.indexOf('.js')) require(__dirname + '/app/models/' + file);
 });
 
 // Bootstrap application settings
@@ -40,5 +42,5 @@ require('./config/express')(app);
 // Bootstrap routes
 require('./config/routes')(app);
 
-app.listen(port);
+http.listen(port);
 console.log('Express app started on port ' + port);

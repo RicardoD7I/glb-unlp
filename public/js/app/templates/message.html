@@ -1,7 +1,9 @@
 <div class="list-group-item">
+    <% if (isLogin) { %>
     <div class="row-action-primary">
         <i class="mdi-social-person"></i>
     </div>
+    <% } %>
     <div class="row-content">
         <h4 class="list-group-item-heading"><%= username %></h4>
         <p class="list-group-item-text"><%= message %></p>

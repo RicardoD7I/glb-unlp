@@ -1,44 +1,54 @@
-define(['App', 'backbone', 'marionette', 'views/WelcomeView', 'views/ChatView', 'views/HeaderView', 'collections/MessageCollection', 'utils/cookies'],
-  function(App, Backbone, Marionette, WelcomeView, ChatView, HeaderView, MessageCollection, cookiesUtils) {
+define(['App', 'backbone', 'marionette', 'views/WelcomeView', 'views/ChatView', 'views/HeaderView', 'collections/MessageCollection', 'utils/cookies', 'socket.io'],
+  function(App, Backbone, Marionette, WelcomeView, ChatView, HeaderView, MessageCollection, cookiesUtils, io) {
     return Backbone.Marionette.Controller.extend({
       initialize: function(options) {
+        var that = this;
+
+        // Show the navBarView
         App.rootLayout.headerRegion.show(new HeaderView());
+
+        // Initialize messages collection
+        this.messageCollection = new MessageCollection();
       },
 
       index: function() {
+        // Show the login view
         var welcomeView = new WelcomeView();
         App.rootLayout.mainRegion.show(welcomeView);
+
+        // Listen to the event of login:success
         this.listenTo(welcomeView, 'login:success', _.bind(function(params) {
-          cookiesUtils.setCookie('logged', params.username);
+
+          // Set new cookie and redirect to the chat view
+          cookiesUtils.setCookie('logged', params.get('username'));
           App.appRouter.navigate('/chat', true);
+
+          //Set new socket.io connection
+          App.socket = io();
+
+          // Send login message
+          App.socket.emit('message', {
+            username: cookiesUtils.getCookie('logged'),
+            isLogin: true
+          });
+
+          // Listen to broadcast channel
+          App.socket.on('broadcast', function(msg) {
+            that.messageCollection.add(msg);
+          });
+
         }, this));
       },
 
       main: function() {
-
-        if (cookiesUtils.getCookie('logged') === '') {
-          return App.appRouter.navigate('/chat', true)
+        // Check if the user is logged
+        if (!cookiesUtils.getCookie('logged')) {
+          return App.appRouter.navigate('/', true)
         }
 
-
-        setTimeout(function() {
-          messageCollection.add({
-            username: 'Ricardo',
-            message: 'Contestaaa!!!'
-          });
-        }, 1000);
-        
-        var messages = [{
-          username: 'Ricardo',
-          message: 'Buen día!'
-        }, {
-          username: 'Tomas',
-          message: 'Buenas'
-        }];
-
-        var messageCollection = new MessageCollection(messages);
+        // Show the chat view
         App.rootLayout.mainRegion.show(new ChatView({
-          collection: messageCollection
+          collection: this.messageCollection
         }));
       }
     });
