@@ -11,6 +11,7 @@
   },
   "scripts": {
     "start": "set NODE_PATH=./config:./app/controllers NODE_ENV=development ./node_modules/.bin/nodemon server.js",
+    "postinstall": "./node_modules/bower/bin/bower install",
     "test": "make test"
   },
   "dependencies": {

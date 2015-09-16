@@ -20,7 +20,7 @@ img {
 }
 
 .login-form {
-	padding: 0 15%;
+	padding: 10% 35%;
 }
 
 .chat-view {
@@ -49,6 +49,12 @@ img {
  .message-item {
   width: 100% !important;
   min-height: 25px !important;
+}
+
+@media (max-width: 800px) {
+  .login-form {
+    padding: 10% 5%;
+  }
 }
 
 @media (max-width: 600px) {
@@ -92,5 +98,9 @@ img {
     margin-bottom: 0 !important;
     margin-top: 10px;
     height: 100px;
+  }
+
+  .login-form {
+    padding: 20% 5%;
   }
 }
